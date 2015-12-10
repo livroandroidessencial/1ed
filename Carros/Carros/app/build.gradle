@@ -22,5 +22,18 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+
+    // RecyclerView: lib para listas
+    // CardView: lib para criar cartões (cards)
+    // Picasso: lib para download de imagens.
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+
     compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'br.com.livroandroid:android-utils:1.0.4'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:cardview-v7:23.1.1'
 }
