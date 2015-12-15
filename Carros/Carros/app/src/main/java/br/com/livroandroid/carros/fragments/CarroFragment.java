@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import br.com.livroandroid.carros.R;
 import br.com.livroandroid.carros.domain.Carro;
@@ -24,10 +21,6 @@ public class CarroFragment extends BaseFragment {
         // Atualiza a descrição do carro no TextView
         TextView tDesc = (TextView) view.findViewById(R.id.tDesc);
         tDesc.setText(carro.desc);
-        // Mostra a foto do carro no ImageView.
-        // A lib Picasso está dando uma força aqui.
-        final ImageView imgView = (ImageView) view.findViewById(R.id.img);
-        Picasso.with(getContext()).load(carro.urlFoto).fit().into(imgView);
         return view;
     }
 }
