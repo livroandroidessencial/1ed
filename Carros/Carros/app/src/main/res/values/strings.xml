@@ -27,6 +27,9 @@ Versao %s<br><br>
     <string name="esportivos">Esportivos</string>
     <string name="error_conexao_indisponivel">Conexão indisponível. Verifique seu Wi-Fi ou 3G.</string>
 
+    <!-- F -->
+    <string name="favoritos">Favoritos</string>
+
     <!-- L -->
     <string name="luxo">Luxo</string>
     <string name="latitudeLongitude">Lat / Lng</string>
@@ -52,5 +55,6 @@ Versao %s<br><br>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

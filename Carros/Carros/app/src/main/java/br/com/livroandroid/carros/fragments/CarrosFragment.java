@@ -1,6 +1,8 @@
 package br.com.livroandroid.carros.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,8 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.otto.Subscribe;
+
+import java.io.IOException;
 import java.util.List;
 
+import br.com.livroandroid.carros.CarrosApplication;
 import br.com.livroandroid.carros.R;
 import br.com.livroandroid.carros.activity.CarroActivity;
 import br.com.livroandroid.carros.adapter.CarroAdapter;
@@ -25,6 +31,8 @@ public class CarrosFragment extends BaseFragment {
     private int tipo;
     // Lista de carros
     private List<Carro> carros;
+    private ProgressDialog dialog;
+
     // Método para instanciar esse fragment pelo tipo
     public static CarrosFragment newInstance(int tipo) {
         Bundle args = new Bundle();
@@ -39,7 +47,10 @@ public class CarrosFragment extends BaseFragment {
         if (getArguments() != null) {
             // Lê o tipo dos argumentos
             this.tipo = getArguments().getInt("tipo");
-        }
+        }		// Registra a classe para receber eventos
+        CarrosApplication.getInstance().getBus().register(this);
+
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle b) {
@@ -55,12 +66,33 @@ public class CarrosFragment extends BaseFragment {
         super.onActivityCreated(b);
         taskCarros();
     }
+
     private void taskCarros() {
-        // Busca os carros pelo tipo
-        this.carros = CarroService.getCarros(getContext(),tipo);
-        // É aqui que utiliza o adapter. O adapter fornece o conteúdo para a lista
-        recyclerView.setAdapter(new CarroAdapter(getContext(), carros, onClickCarro()));
+        // Busca os carros: Dispara a Task
+        new GetCarrosTask().execute();
     }
+    // Task para buscar os carros
+    private class GetCarrosTask extends AsyncTask<Void,Void,List<Carro>> {
+        @Override
+        protected List<Carro> doInBackground(Void... params) {
+            try {
+                // Busca os carros em background (Thread)
+                return CarroService.getCarros(getContext(), tipo);
+            } catch (IOException e) {
+                alert("Erro: " + e.getMessage());
+                return null;
+            }
+        }
+        // Atualiza a interface
+        protected void onPostExecute(List<Carro> carros) {
+            if(carros != null) {
+                CarrosFragment.this.carros = carros;
+                // Atualiza a view na UI Thread
+                recyclerView.setAdapter(new CarroAdapter(getContext(), carros, onClickCarro()));
+            }
+        }
+    }
+
     // Da mesma forma que tratamos o evento de clique em um botão (OnClickListener)
     // Vamos tratar o evento de clique na lista.
     // A diferença é que a interface CarroAdapter.CarroOnClickListener nós mesmo criamos.
@@ -78,5 +110,18 @@ public class CarrosFragment extends BaseFragment {
             }
         };
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Cancela o recebimento de eventos
+        CarrosApplication.getInstance().getBus().unregister(this);
+    }
+    @Subscribe
+    public void onBusAtualizarListaCarros(String refresh) {
+        // Recebeu o evento, atualiza a lista
+        taskCarros();
+    }
+
 }
 
