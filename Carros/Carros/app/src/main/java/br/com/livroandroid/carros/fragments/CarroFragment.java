@@ -41,6 +41,11 @@ public class CarroFragment extends BaseFragment {
         // Video
         view.findViewById(R.id.imgPlayVideo).setOnClickListener(onClickPlayVideo());
 
+        // Mapa
+        MapaFragment mapaFragment = new MapaFragment();
+        mapaFragment.setArguments(getArguments());
+        getChildFragmentManager().beginTransaction().replace(R.id.mapaFragment, mapaFragment).commit();
+
         return view;
     }
 

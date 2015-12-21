@@ -131,10 +131,13 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
             <!-- No capítulo sobre Mapas vamos colocar um mapa aqui -->
-            <TextView
+            <FrameLayout
+                android:id="@+id/mapaFragment"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mapa aqui" android:layout_margin="16dp" />
+                android:layout_height="320dp"
+                android:layout_margin="16dp"
+                />
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>
