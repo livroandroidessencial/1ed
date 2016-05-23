@@ -51,7 +51,7 @@ public class CarroDB extends SQLiteOpenHelper {
                 String[] whereArgs = new String[]{_id};
                 // update carro set values = ... where _id=?
                 int count = db.update("carro", values, "_id=?", whereArgs);
-                return count;
+                return count > 0 ? id : 0L;
             } else {
                 // insert into carro values (...)
                 id = db.insert("carro", "", values);
