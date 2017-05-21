@@ -22,7 +22,7 @@ public class MainActivity extends android.support.v7.app.AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Hello ActionBarCompat");
+        actionBar.setTitle("Hello Toolbar!");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
