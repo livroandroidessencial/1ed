@@ -15,6 +15,7 @@ import br.com.livroandroid.carros.CarrosApplication;
 import br.com.livroandroid.carros.R;
 import br.com.livroandroid.carros.domain.Carro;
 import br.com.livroandroid.carros.domain.CarroDB;
+import livroandroid.lib.task.TaskListener;
 
 public class CarroFragment extends BaseFragment {
     private Carro carro;
