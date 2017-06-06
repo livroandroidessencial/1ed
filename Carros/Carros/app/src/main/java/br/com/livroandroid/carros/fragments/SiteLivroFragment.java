@@ -30,7 +30,12 @@ public class SiteLivroFragment extends BaseFragment {
         webview.loadUrl(URL_SOBRE);
         // Swipe to Refresh
         swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeToRefresh);
-        swipeLayout.setOnRefreshListener(OnRefreshListener());
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                webview.reload();
+            }
+        });
         // Cores da animação
         swipeLayout.setColorSchemeResources(
                 R.color.refresh_progress_1,
