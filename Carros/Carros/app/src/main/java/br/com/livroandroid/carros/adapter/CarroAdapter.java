@@ -94,12 +94,12 @@ public class CarroAdapter extends RecyclerView.Adapter<CarroAdapter.CarrosViewHo
 
     // O ViewHolder possui a referência para as views do layout
     public static class CarrosViewHolder extends RecyclerView.ViewHolder {
-        public TextView tNome;
+        TextView tNome;
         ImageView img;
         ProgressBar progress;
         CardView cardView;
 
-        public CarrosViewHolder(View view) {
+        private CarrosViewHolder(View view) {
             super(view);
             // Faz o findViewById(id) para armazenar as views
             // O Android vai reutilizar este ViewHolder durante a rolagem

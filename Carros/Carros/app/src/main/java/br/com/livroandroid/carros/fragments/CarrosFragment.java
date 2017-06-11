@@ -83,8 +83,9 @@ public class CarrosFragment extends BaseFragment {
                 return null;
             }
         }
-        // Atualiza a interface
+        @Override
         protected void onPostExecute(List<Carro> carros) {
+            // Atualiza a interface
             if(carros != null) {
                 CarrosFragment.this.carros = carros;
                 // Atualiza a view na UI Thread
@@ -100,9 +101,8 @@ public class CarrosFragment extends BaseFragment {
         return new CarroAdapter.CarroOnClickListener() {
             @Override
             public void onClickCarro(View view, int idx) {
-                // Carro selecionado.
+                // Abre a tela de detalhes com o carro selecionado.
                 Carro c = carros.get(idx);
-                // Mostra um alerta rápido com um toast.
                 Intent intent = new Intent(getContext(), CarroActivity.class);
                 intent.putExtra("carro", c);
                 startActivity(intent);
