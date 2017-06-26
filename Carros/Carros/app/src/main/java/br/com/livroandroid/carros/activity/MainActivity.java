@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import br.com.livroandroid.carros.BuildConfig;
 import br.com.livroandroid.carros.R;
 import br.com.livroandroid.carros.adapter.TabsAdapter;
 import livroandroid.lib.utils.PermissionUtils;
@@ -21,6 +22,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setUpToolbar();
         setupNavDrawer();
         setupViewPagerTabs();
