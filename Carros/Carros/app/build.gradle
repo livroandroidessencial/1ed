@@ -24,7 +24,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     // Livro
-    compile 'br.com.livroandroid:android-utils:5.0.1'
+    compile 'br.com.livroandroid:android-utils:7.0.0'
 
     // Google
     compile 'com.android.support:appcompat-v7:27.0.2'
