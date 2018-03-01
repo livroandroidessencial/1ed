@@ -6,17 +6,20 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Looper;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,7 +37,7 @@ import java.util.Date;
  *
  * @author Ricardo Lecheta
  */
-public class MainActivity extends ActionBarActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "livroandroid";
     protected GoogleMap map;
     private SupportMapFragment mapFragment;
@@ -138,6 +141,46 @@ public class MainActivity extends ActionBarActivity implements OnMapReadyCallbac
         toast("Erro ao conectar: " + connectionResult);
     }
 
+    private void toast(String s) {
+        Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
+    }
+
+    // Inicia o monitoramento do GPS
+    protected void startLocationUpdates() {
+        Log.d(TAG, "startLocationUpdates()");
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        // Verifica permissões
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Este "if" o Android Studio pede para colocar.
+            // Alguma permissão foi negada, agora é com você :-)
+            alertAndFinish();
+            return;
+        }
+
+        // Começa o monitoramento.
+        FusedLocationProviderClient locClient = LocationServices.getFusedLocationProviderClient(this);
+        locClient.requestLocationUpdates(mLocationRequest, locationCallback, Looper.myLooper());
+    }
+
+    // Para de monitorar o GPS
+    protected void stopLocationUpdates() {
+        LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
+    }
+
+    // Listener para monitorar o GPS
+    private LocationCallback locationCallback = new LocationCallback(){
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location location = locationResult.getLastLocation();
+            // Atualiza o mapa
+            setMapLocation(location);
+        }
+    };
+
     // Atualiza a coordenada do mapa
     private void setMapLocation(Location l) {
         if (map != null && l != null) {
@@ -158,41 +201,5 @@ public class MainActivity extends ActionBarActivity implements OnMapReadyCallbac
             map.clear();
             map.addCircle(circle);
         }
-    }
-
-    private void toast(String s) {
-        Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * TUDO IGUAL O EXEMPLO ANTERIOR "My Location"
-     *
-     * O que muda é essa parte aqui para baixo...
-     *
-     * Adicionado métodos para fazer start e stop do GPS
-     *
-     * veja os métodos onConnected(bundle) e onStop()
-     */
-
-    protected void startLocationUpdates() {
-        Log.d(TAG,"startLocationUpdates()");
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-    }
-
-    protected void stopLocationUpdates() {
-        Log.d(TAG,"stopLocationUpdates()");
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.d(TAG,"onLocationChanged(): " + location);
-        // Nova localizaçao: atualiza a interface
-        setMapLocation(location);
     }
 }

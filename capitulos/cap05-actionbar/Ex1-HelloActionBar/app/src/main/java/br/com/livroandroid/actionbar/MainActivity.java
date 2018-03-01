@@ -19,8 +19,8 @@ public class MainActivity extends Activity {
 
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("Hello ActionBar");
-
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Infla o menu com os botões da action bar
@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void toast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }

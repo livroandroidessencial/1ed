@@ -10,6 +10,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Cria o canal (channel) para a notificação
+        NotificationUtil.createChannel(this);
     }
 
     public void onClickStart(View view) {

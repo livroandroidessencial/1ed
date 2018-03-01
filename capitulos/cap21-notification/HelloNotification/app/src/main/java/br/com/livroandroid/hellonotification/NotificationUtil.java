@@ -1,4 +1,4 @@
-package br.com.livroandroid.helloreceiver;
+package br.com.livroandroid.hellonotification;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
-import br.com.livroandroid.helloreceiver.R;
 
 /**
  * Classe utilitária para disparar notifications

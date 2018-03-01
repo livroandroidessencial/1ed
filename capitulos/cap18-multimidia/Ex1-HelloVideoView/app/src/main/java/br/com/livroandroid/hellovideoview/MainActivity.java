@@ -14,16 +14,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        VideoView videoView = (VideoView) findViewById(R.id.videoView);
+        /**
+         * Precisa da permissão INTERNET no AndroidManifest.xml
+         */
+        VideoView videoView = findViewById(R.id.videoView);
         videoView.setMediaController(new MediaController(this));
         String url = "http://www.livroandroid.com.br/livro/carros/esportivos/ferrari_ff.mp4";
         videoView.setVideoURI(Uri.parse(url));
         videoView.start();
 
         // Intent para tocar o vídeo no player nativo
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.parse(url), "video/*");
-        startActivity(intent);
+        /*Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.parse(url), "video*//*");
+        startActivity(intent);*/
 
     }
 }

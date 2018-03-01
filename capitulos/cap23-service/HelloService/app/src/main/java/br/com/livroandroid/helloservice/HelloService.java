@@ -31,8 +31,10 @@ public class HelloService extends IntentService {
             } catch (InterruptedException e) {
             }
         }
+
         Log.d(TAG, "<< HelloService.onHandleIntent()");
-        NotificationUtil.notify(this, 1, intent, "Livro Android", "Fim do serviço.");
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        NotificationUtil.create(this, 1, mainIntent, "Livro Android", "Fim do serviço.");
     }
 
     @Override

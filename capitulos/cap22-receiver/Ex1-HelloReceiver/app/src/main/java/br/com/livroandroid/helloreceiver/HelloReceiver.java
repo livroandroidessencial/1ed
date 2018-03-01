@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by Ricardo Lecheta on 08/03/2015.
@@ -16,6 +15,6 @@ public class HelloReceiver extends BroadcastReceiver {
 
         // Cria uma notificação.
         Intent intent = new Intent(c, MainActivity.class);
-        NotificationUtil.notify(c, 1, intent, "Livro Android", "Hello Receiver");
+        NotificationUtil.create(c, 1, intent, "Livro Android", "Hello Receiver");
     }
 }

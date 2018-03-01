@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,6 +27,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
  * Exemplo de MapFragment por XML
@@ -139,17 +144,43 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_my_location:
-                // Última localização
-                Location l = LocationServices.FusedLocationApi.getLastLocation(
-                        mGoogleApiClient);
 
-                Log.d(TAG, "lastLocation: " + l);
+                getLastLocation();
 
-                // Atualiza a localização do mapa
-                setMapLocation(l);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Busca a última localização GPS do usuário
+    public void getLastLocation() {
+        FusedLocationProviderClient fusedClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // Verifica permissões
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Este "if" o Android Studio pede para colocar.
+            // Alguma permissão foi negada, agora é com você :-)
+            alertAndFinish();
+            return;
+        }
+
+        // API do Google Play Services
+        fusedClient.getLastLocation()
+                .addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            // Atualiza a localização do mapa
+                            setMapLocation(location);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Não foi possível ao buscar a localização do GPS");
+                    }
+                });
     }
 
     // Atualiza a coordenada do mapa

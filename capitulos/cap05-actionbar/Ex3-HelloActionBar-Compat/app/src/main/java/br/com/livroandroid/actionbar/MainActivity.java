@@ -26,7 +26,7 @@ public class MainActivity extends android.support.v7.app.AppCompatActivity {
 
         // SearchView
         MenuItem item = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(onSearch());
 
         // ShareActionProvider

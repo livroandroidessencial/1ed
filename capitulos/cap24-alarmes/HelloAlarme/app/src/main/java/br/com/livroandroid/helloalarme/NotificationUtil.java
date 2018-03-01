@@ -1,4 +1,4 @@
-package br.com.livroandroid.helloreceiver;
+package br.com.livroandroid.helloalarme;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
-import br.com.livroandroid.helloreceiver.R;
 
 /**
  * Classe utilitária para disparar notifications
@@ -42,7 +40,7 @@ public class NotificationUtil {
         PendingIntent p = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Cria a notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentIntent(p)
                 .setContentTitle(title)
                 .setContentText(msg)

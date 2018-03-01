@@ -19,7 +19,7 @@ public class MainActivity extends DebugActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btLogin = (Button) findViewById(R.id.btLogin);
+        Button btLogin = findViewById(R.id.btLogin);
         btLogin.setOnClickListener(onClickLogin());
     }
 
@@ -27,17 +27,15 @@ public class MainActivity extends DebugActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView tLogin = (TextView)
-                        findViewById(R.id.tLogin);
-                TextView tSenha = (TextView)
-                        findViewById(R.id.tSenha);
+                TextView tLogin = findViewById(R.id.tLogin);
+                TextView tSenha = findViewById(R.id.tSenha);
                 String login = tLogin.getText().toString();
                 String senha = tSenha.getText().toString();
 
-                if("ricardo".equals(login) && "123".equals(senha)) {
+                if ("ricardo".equals(login) && "123".equals(senha)) {
                     // Navega para a próxima tela
 
-                    Intent intent = new Intent(getContext(),BemVindoActivity.class);
+                    Intent intent = new Intent(getContext(), BemVindoActivity.class);
                     Bundle params = new Bundle();
                     params.putString("nome", "Ricardo Lecheta");
                     intent.putExtras(params);
@@ -54,7 +52,7 @@ public class MainActivity extends DebugActivity {
     }
 
     private void alert(String s) {
-        Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -63,12 +61,13 @@ public class MainActivity extends DebugActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             // Clicou no botão settings da action bar (o toast é um breve alerta que vai sumir)
-            Toast.makeText(this,"Clicou no settings",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Clicou no settings", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);

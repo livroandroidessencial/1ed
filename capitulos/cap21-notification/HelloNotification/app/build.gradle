@@ -5,7 +5,7 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "br.com.livroandroid.helloreceiver"
+        applicationId "br.com.livroandroid.hellonotification"
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 1
